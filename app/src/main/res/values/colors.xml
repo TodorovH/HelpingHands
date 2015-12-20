@@ -10,4 +10,5 @@
     <color name="colorBlueLogoLight">#256FC5</color>
     <color name="colorBlack">#0B0B0B</color>
     <color name="colorGrayDark">#555A5C</color>
+    <color name="colorRegisterTextWhite">#FFFFFF</color>
 </resources>
