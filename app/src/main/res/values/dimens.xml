@@ -1,0 +1,15 @@
+<resources>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_login_horizontal_margin">30dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="activity_login_vertical_margin">30dp</dimen>
+    <dimen name="activity_login_button_vertical_margin">50dp</dimen>
+    <dimen name="starting_activity_margin_top">30dp</dimen>
+    <dimen name="starting_activity_margin_bottom">65dp</dimen>
+    <dimen name="starting_activity_margin_left">30dp</dimen>
+    <dimen name="starting_activity_margin_right">30dp</dimen>
+    <dimen name="false_drawer_button_right">20dp</dimen>
+    <dimen name="text_size_starting_custom_row">50dp</dimen>
+    <dimen name="text_size_editText">25dp</dimen>
+    <dimen name="text_size_editTextBig">35dp</dimen>
+</resources>

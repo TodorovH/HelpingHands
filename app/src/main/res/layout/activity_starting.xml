@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite">
+
+        <ImageView
+            android:layout_width="250dp"
+            android:layout_height="400dp"
+            android:layout_gravity="center|top"
+            android:layout_marginTop="@dimen/starting_activity_margin_top"
+            android:id="@+id/logoImage"
+            android:background="@mipmap/logo_big"
+            android:nestedScrollingEnabled="false" />
+
+        <android.support.v4.widget.DrawerLayout
+            android:id="@+id/drawer_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+           <ListView
+               android:id="@+id/right_drawer_list_view"
+               android:layout_width="240dp"
+               android:layout_height="wrap_content"
+               android:layout_gravity="right|center"
+               android:choiceMode="singleChoice"
+               android:divider="#FFFFFF"
+               android:dividerHeight="3dp"
+               android:background="#CECECE"
+               android:drawSelectorOnTop="true">
+
+           </ListView>
+
+        </android.support.v4.widget.DrawerLayout>
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_gravity="bottom"
+            android:minHeight="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Dark">
+
+            <ImageButton
+                android:id="@+id/false_drawer_button"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="@dimen/false_drawer_button_right"
+                android:layout_gravity="end"
+                android:background="@drawable/logo_image"/>
+
+        </android.support.v7.widget.Toolbar>
+
+    </FrameLayout>
+
+</LinearLayout>
