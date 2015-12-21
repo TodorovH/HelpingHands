@@ -11,4 +11,5 @@
     <color name="colorBlack">#0B0B0B</color>
     <color name="colorGrayDark">#555A5C</color>
     <color name="colorRegisterTextWhite">#FFFFFF</color>
+    <color name="colorOrange">#F65327</color>
 </resources>

@@ -70,7 +70,7 @@
         android:id="@+id/button_login"
         android:layout_weight="0.18"
         android:textColor="@color/colorWhite"
-        android:background="@color/colorBlue"/>
+        android:background="@drawable/custom_button"/>
 
     <TextView
         android:layout_width="match_parent"

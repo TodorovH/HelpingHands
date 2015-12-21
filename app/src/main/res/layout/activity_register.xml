@@ -211,7 +211,7 @@
             android:layout_marginTop="@dimen/activity_register_button_vertical_margin"
             android:id="@+id/button_register"
             android:textColor="@color/colorWhite"
-            android:background="@color/colorBlue"/>
+            android:background="@drawable/custom_button"/>
 
     </LinearLayout>
 

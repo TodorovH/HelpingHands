@@ -4,10 +4,14 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -21,6 +25,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private EditText rPassword;
     private EditText rPasswordConfirm;
     private Button bRegister;
+    private String nameStr;
+    private String ageStr;
+    private String cityStr;
+    private String usernameStr;
+    private String passwordStr;
+    private String passwordConfirmStr;
+    private String addressStr;
+    private String phoneStr;
+    private String emailStr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +60,25 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.button_register:
+                nameStr = name.getText().toString();
+                ageStr = age.getText().toString();
+                cityStr = city.getText().toString();
+                usernameStr = rUsername.getText().toString();
+                passwordStr = rPassword.getText().toString();
+                passwordConfirmStr = rPasswordConfirm.getText().toString();
+
+                addressStr = address.getText().toString();
+                phoneStr = phone.getText().toString();
+                emailStr = email.getText().toString();
+
+                if (nameStr.isEmpty() | ageStr.isEmpty() |
+                        cityStr.isEmpty() | usernameStr.isEmpty() |
+                        passwordStr.isEmpty() | passwordConfirmStr.isEmpty()){
+                    setToastRegister();
+                }
+                if (!passwordStr.isEmpty() & !passwordConfirmStr.isEmpty() & passwordStr != passwordConfirmStr){
+                    setToastPassConfirm();
+                }
 
 
 
@@ -55,5 +87,27 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 //TODO...
                 break;
         }
+    }
+
+    private void setToastRegister(){
+        Toast toast = new Toast(this);
+        LayoutInflater layoutInflater = getLayoutInflater();
+        View v = layoutInflater.inflate(R.layout.custom_register_toast,
+                (ViewGroup) findViewById(R.id.toast_register_layout));
+        toast.setView(v);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
+    }
+
+    private void setToastPassConfirm(){
+        Toast toast = new Toast(this);
+        LayoutInflater layoutInflater = getLayoutInflater();
+        View v = layoutInflater.inflate(R.layout.custom_pass_confirm_toast,
+                (ViewGroup) findViewById(R.id.toast_pass_confirm_layout));
+        toast.setView(v);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
     }
 }
