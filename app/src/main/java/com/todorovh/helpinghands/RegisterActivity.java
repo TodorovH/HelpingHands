@@ -11,29 +11,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private EditText name;
-    private EditText age;
-    private EditText city;
-    private EditText address;
-    private EditText phone;
-    private EditText email;
-    private EditText rUsername;
-    private EditText rPassword;
-    private EditText rPasswordConfirm;
+    private EditText name,
+            age, city, address, phone, email, rUsername, rPassword, rPasswordConfirm;
     private Button bRegister;
-    private String nameStr;
-    private String ageStr;
-    private String cityStr;
-    private String usernameStr;
-    private String passwordStr;
-    private String passwordConfirmStr;
-    private String addressStr;
-    private String phoneStr;
-    private String emailStr;
+    private boolean fieldsAreSet = false,
+            passwordIsConfirm = false,
+            isReadyToRegister = false;
+    private int ageNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,30 +49,55 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.button_register:
-                nameStr = name.getText().toString();
-                ageStr = age.getText().toString();
-                cityStr = city.getText().toString();
-                usernameStr = rUsername.getText().toString();
-                passwordStr = rPassword.getText().toString();
-                passwordConfirmStr = rPasswordConfirm.getText().toString();
+                String nameStr = name.getText().toString();
+                String ageStr = age.getText().toString();
+                String cityStr = city.getText().toString();
+                String usernameStr = rUsername.getText().toString();
+                String passwordStr = rPassword.getText().toString();
+                String passwordConfirmStr = rPasswordConfirm.getText().toString();
 
-                addressStr = address.getText().toString();
-                phoneStr = phone.getText().toString();
-                emailStr = email.getText().toString();
+                String addressStr = address.getText().toString();
+                String phoneStr = phone.getText().toString();
+                String emailStr = email.getText().toString();
 
                 if (nameStr.isEmpty() | ageStr.isEmpty() |
                         cityStr.isEmpty() | usernameStr.isEmpty() |
                         passwordStr.isEmpty() | passwordConfirmStr.isEmpty()){
                     setToastRegister();
+                } else {
+                    fieldsAreSet = true;
                 }
-                if (!passwordStr.isEmpty() & !passwordConfirmStr.isEmpty() & passwordStr != passwordConfirmStr){
+                if ((!passwordStr.isEmpty() & !passwordConfirmStr.isEmpty()) & !passwordStr.equals(passwordConfirmStr)){
                     setToastPassConfirm();
+                } else {
+                    passwordIsConfirm = true;
                 }
 
+                if (fieldsAreSet & passwordIsConfirm){
+                    try {
+                        ageNumber = Integer.parseInt(ageStr);
+                        if (ageNumber < 1 | ageNumber > 150){
+                            setToastInvalidAge();
+                        } else {
+                            isReadyToRegister = true;
+                        }
+                    } catch (Exception e){
+                        setToastInvalidAge();
+                    }
+                }
 
+                if (isReadyToRegister){
+                    User user = new User(
+                            nameStr,
+                            ageNumber,
+                            cityStr,
+                            usernameStr,
+                            passwordStr,
+                            addressStr,
+                            phoneStr,
+                            emailStr);
+                }
 
-                //bRegister.setBackgroundColor(Color.WHITE);
-                //bRegister.setTextColor(Color.BLUE);
                 //TODO...
                 break;
         }
@@ -91,12 +105,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     private void setToastRegister(){
         Toast toast = new Toast(this);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
         LayoutInflater layoutInflater = getLayoutInflater();
         View v = layoutInflater.inflate(R.layout.custom_register_toast,
                 (ViewGroup) findViewById(R.id.toast_register_layout));
         toast.setView(v);
-        toast.setDuration(Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
     }
 
@@ -105,6 +119,17 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         LayoutInflater layoutInflater = getLayoutInflater();
         View v = layoutInflater.inflate(R.layout.custom_pass_confirm_toast,
                 (ViewGroup) findViewById(R.id.toast_pass_confirm_layout));
+        toast.setView(v);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
+    }
+
+    private void setToastInvalidAge(){
+        Toast toast = new Toast(this);
+        LayoutInflater layoutInflater = getLayoutInflater();
+        View v = layoutInflater.inflate(R.layout.custom_invalid_age_toast,
+                (ViewGroup) findViewById(R.id.toast_invalid_age_layout));
         toast.setView(v);
         toast.setDuration(Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER, 0, 0);

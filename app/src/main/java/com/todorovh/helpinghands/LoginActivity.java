@@ -14,12 +14,10 @@ import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private EditText username;
-    private EditText password;
+    private EditText username, password;
     private Button bLogin;
     private TextView registerLink;
-    private String usernameStr;
-    private String passwordStr;
+    UserLocalStore userLocalStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +26,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         init();
         bLogin.setOnClickListener(this);
         registerLink.setOnClickListener(this);
+        userLocalStore = new UserLocalStore(this);
     }
 
     private void init(){
@@ -41,14 +40,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.button_login:
-                usernameStr = username.getText().toString();
-                passwordStr = password.getText().toString();
+                String usernameStr = username.getText().toString();
+                String passwordStr = password.getText().toString();
                 if (usernameStr.isEmpty() | passwordStr.isEmpty()){
                     setToast();
 
                 }
 
-                //TODO...
+                User user = new User(null, null);
+                userLocalStore.storeUserData(user);
+                userLocalStore.setUserLoggedIn(true);
+
                 break;
             case R.id.registerLink:
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));

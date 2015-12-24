@@ -33,7 +33,8 @@
             android:text=""
             android:ems="10"
             android:id="@+id/register_name_text"
-            android:textColor="@color/colorRegisterTextWhite"/>
+            android:textColor="@color/colorRegisterTextWhite"
+            android:maxLength="30"/>
 
         <LinearLayout
             android:orientation="horizontal"
@@ -63,7 +64,8 @@
                     android:text=""
                     android:ems="10"
                     android:id="@+id/register_age_text"
-                    android:textColor="@color/colorRegisterTextWhite"/>
+                    android:textColor="@color/colorRegisterTextWhite"
+                    android:maxLength="4"/>
 
             </LinearLayout>
             <LinearLayout
@@ -90,7 +92,8 @@
                     android:ems="10"
                     android:id="@+id/register_city_text"
                     android:textColor="@color/colorRegisterTextWhite"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:maxLength="15"/>
 
             </LinearLayout>
         </LinearLayout>
@@ -111,7 +114,8 @@
             android:text=""
             android:ems="10"
             android:id="@+id/register_address_text"
-            android:textColor="@color/colorRegisterTextWhite"/>
+            android:textColor="@color/colorRegisterTextWhite"
+            android:maxLength="150"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -147,7 +151,8 @@
             android:text=""
             android:ems="10"
             android:id="@+id/register_email_text"
-            android:textColor="@color/colorRegisterTextWhite"/>
+            android:textColor="@color/colorRegisterTextWhite"
+            android:maxLength="30"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -165,7 +170,8 @@
             android:text=""
             android:ems="10"
             android:id="@+id/register_username_text"
-            android:textColor="@color/colorRegisterTextWhite"/>
+            android:textColor="@color/colorRegisterTextWhite"
+            android:maxLength="30"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -183,7 +189,8 @@
             android:text=""
             android:ems="10"
             android:id="@+id/register_password_text"
-            android:textColor="@color/colorRegisterTextWhite"/>
+            android:textColor="@color/colorRegisterTextWhite"
+            android:maxLength="30"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -201,7 +208,8 @@
             android:text=""
             android:ems="10"
             android:id="@+id/register_password_confirm_text"
-            android:textColor="@color/colorRegisterTextWhite"/>
+            android:textColor="@color/colorRegisterTextWhite"
+            android:maxLength="30"/>
 
         <Button
             android:layout_width="match_parent"
