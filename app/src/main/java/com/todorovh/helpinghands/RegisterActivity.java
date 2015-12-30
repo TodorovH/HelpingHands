@@ -1,17 +1,18 @@
 package com.todorovh.helpinghands;
 
-import android.content.res.Resources;
-import android.graphics.Color;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
@@ -21,7 +22,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private Button bRegister;
     private boolean fieldsAreSet = false,
             passwordIsConfirm = false,
-            isReadyToRegister = false;
+            isReadyToRegister = false,
+            isConnected = false;
     private int ageNumber;
 
     @Override
@@ -60,23 +62,23 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 String phoneStr = phone.getText().toString();
                 String emailStr = email.getText().toString();
 
-                if (nameStr.isEmpty() | ageStr.isEmpty() |
-                        cityStr.isEmpty() | usernameStr.isEmpty() |
-                        passwordStr.isEmpty() | passwordConfirmStr.isEmpty()){
+                if (nameStr.isEmpty() || ageStr.isEmpty() ||
+                        cityStr.isEmpty() || usernameStr.isEmpty() ||
+                        passwordStr.isEmpty() || passwordConfirmStr.isEmpty()){
                     setToastRegister();
                 } else {
                     fieldsAreSet = true;
                 }
-                if ((!passwordStr.isEmpty() & !passwordConfirmStr.isEmpty()) & !passwordStr.equals(passwordConfirmStr)){
+                if ((!passwordStr.isEmpty() && !passwordConfirmStr.isEmpty()) && !passwordStr.equals(passwordConfirmStr)){
                     setToastPassConfirm();
                 } else {
                     passwordIsConfirm = true;
                 }
 
-                if (fieldsAreSet & passwordIsConfirm){
+                if (fieldsAreSet && passwordIsConfirm){
                     try {
                         ageNumber = Integer.parseInt(ageStr);
-                        if (ageNumber < 1 | ageNumber > 150){
+                        if (ageNumber < 1 || ageNumber > 150){
                             setToastInvalidAge();
                         } else {
                             isReadyToRegister = true;
@@ -86,7 +88,16 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     }
                 }
 
-                if (isReadyToRegister){
+                ConnectivityManager connMgr = (ConnectivityManager)
+                        getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+                if (networkInfo != null && networkInfo.isConnected()) {
+                    isConnected = true;
+                } else {
+                    setToastConnection();
+                }
+
+                if (isReadyToRegister && isConnected){
                     User user = new User(
                             nameStr,
                             ageNumber,
@@ -96,11 +107,35 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                             addressStr,
                             phoneStr,
                             emailStr);
+
+                    registerUser(user);
                 }
 
-                //TODO...
                 break;
         }
+    }
+
+    private void registerUser(User user){
+        ServerRequests serverRequests = new ServerRequests(this);
+        serverRequests.storeUserDataInBackground(user, new GetUserCallBack() {
+            @Override
+            public void done(User returnedUser) {
+                clearEditViews();
+                startActivity(new Intent(RegisterActivity.this, UserActivity.class));
+            }
+        });
+    }
+
+    private void clearEditViews(){
+        ((EditText)findViewById(R.id.register_name_text)).setText(R.string.Empty_string);
+        ((EditText)findViewById(R.id.register_age_text)).setText(R.string.Empty_string);
+        ((EditText)findViewById(R.id.register_city_text)).setText(R.string.Empty_string);
+        ((EditText)findViewById(R.id.register_address_text)).setText(R.string.Empty_string);
+        ((EditText)findViewById(R.id.register_phone_text)).setText(R.string.Empty_string);
+        ((EditText)findViewById(R.id.register_email_text)).setText(R.string.Empty_string);
+        ((EditText)findViewById(R.id.register_username_text)).setText(R.string.Empty_string);
+        ((EditText)findViewById(R.id.register_password_text)).setText(R.string.Empty_string);
+        ((EditText)findViewById(R.id.register_password_confirm_text)).setText(R.string.Empty_string);
     }
 
     private void setToastRegister(){
@@ -114,25 +149,36 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         toast.show();
     }
 
+    private void setToastConnection(){
+        Toast toast = new Toast(this);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        LayoutInflater layoutInflater = getLayoutInflater();
+        View v = layoutInflater.inflate(R.layout.custom_connection_toast,
+                (ViewGroup) findViewById(R.id.toast_connection));
+        toast.setView(v);
+        toast.show();
+    }
+
     private void setToastPassConfirm(){
         Toast toast = new Toast(this);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
         LayoutInflater layoutInflater = getLayoutInflater();
         View v = layoutInflater.inflate(R.layout.custom_pass_confirm_toast,
                 (ViewGroup) findViewById(R.id.toast_pass_confirm_layout));
         toast.setView(v);
-        toast.setDuration(Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
     }
 
     private void setToastInvalidAge(){
         Toast toast = new Toast(this);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
         LayoutInflater layoutInflater = getLayoutInflater();
         View v = layoutInflater.inflate(R.layout.custom_invalid_age_toast,
                 (ViewGroup) findViewById(R.id.toast_invalid_age_layout));
         toast.setView(v);
-        toast.setDuration(Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
     }
 }

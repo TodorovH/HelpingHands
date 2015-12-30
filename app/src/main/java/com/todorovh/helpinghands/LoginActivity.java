@@ -1,5 +1,6 @@
 package com.todorovh.helpinghands;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Button bLogin;
     private TextView registerLink;
     UserLocalStore userLocalStore;
+    static String usernameStr;
+    static String passwordStr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,22 +43,56 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.button_login:
-                String usernameStr = username.getText().toString();
-                String passwordStr = password.getText().toString();
-                if (usernameStr.isEmpty() | passwordStr.isEmpty()){
+                usernameStr = username.getText().toString();
+                passwordStr = password.getText().toString();
+
+                User user = new User(usernameStr, passwordStr);
+
+                if (usernameStr.isEmpty() || passwordStr.isEmpty()){
                     setToast();
-
+                } else {
+                    authenticate(user);
                 }
-
-                User user = new User(null, null);
-                userLocalStore.storeUserData(user);
-                userLocalStore.setUserLoggedIn(true);
 
                 break;
             case R.id.registerLink:
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
                 break;
         }
+    }
+
+    private void authenticate(User user){
+        ServerRequests serverRequests = new ServerRequests(this);
+        serverRequests.fetchUserDataInBackground(user, new GetUserCallBack() {
+            @Override
+            public void done(User returnedUser) {
+                if (returnedUser == null){
+                    clearEditViews();
+                    showErrorMessage();
+                } else {
+                    clearEditViews();
+                    logUserIn(returnedUser);
+                }
+            }
+        });
+    }
+
+    private void showErrorMessage(){
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(LoginActivity.this);
+        dialogBuilder.setMessage("Incorrect user details");
+        dialogBuilder.setPositiveButton("Ok", null);
+        dialogBuilder.show();
+    }
+
+    private void logUserIn(User returnedUser){
+        userLocalStore.storeUserData(returnedUser);
+        userLocalStore.setUserLoggedIn(true);
+        startActivity(new Intent(LoginActivity.this, UserActivity.class));
+    }
+
+    private void clearEditViews(){
+        ((EditText)findViewById(R.id.username)).setText(R.string.Empty_string);
+        ((EditText)findViewById(R.id.password)).setText(R.string.Empty_string);
     }
 
     private void setToast(){

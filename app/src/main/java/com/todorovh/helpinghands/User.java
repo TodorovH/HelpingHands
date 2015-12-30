@@ -30,6 +30,24 @@ public class User {
             int age,
             String city,
             String username,
+            String address,
+            String phone,
+            String email
+    ){
+        this.name = name;
+        this.age = age;
+        this.city = city;
+        this.username = username;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
+    }
+
+    public User (
+            String name,
+            int age,
+            String city,
+            String username,
             String password
     ){
         this.name = name;

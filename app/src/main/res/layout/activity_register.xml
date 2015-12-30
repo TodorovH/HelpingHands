@@ -65,7 +65,7 @@
                     android:ems="10"
                     android:id="@+id/register_age_text"
                     android:textColor="@color/colorRegisterTextWhite"
-                    android:maxLength="4"/>
+                    android:maxLength="3"/>
 
             </LinearLayout>
             <LinearLayout
@@ -133,7 +133,8 @@
             android:text=""
             android:ems="10"
             android:id="@+id/register_phone_text"
-            android:textColor="@color/colorRegisterTextWhite"/>
+            android:textColor="@color/colorRegisterTextWhite"
+            android:maxLength="30"/>
 
         <TextView
         android:layout_width="wrap_content"

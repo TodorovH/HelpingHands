@@ -9,9 +9,11 @@
     <string name="register">Register</string>
     <string name="events">Events</string>
     <string name="title_activity_login">Sign in</string>
-
+    <string name="title_activity_user">User</string>
     <string name="title_activity_register">Register</string>
     <string name="invalid_password_confirmation">Invalid password confirmation</string>
     <string name="fields_cannot_be_empty">Fields with * cannot be empty</string>
     <string name="Invalid_age">Invalid age</string>
+    <string name="Network_not_connected">Network is not connected</string>
+    <string name="Empty_string"></string>
 </resources>
